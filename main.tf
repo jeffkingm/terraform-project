@@ -68,7 +68,7 @@ resource "aws_route_table_association" "a" {
   route_table_id = aws_route_table.prod-route-table.id
 }
 
-# 7. Create security Group to allow port 22,80,443
+# 7. Create security Group to allow port 22, 80, 443
 resource "aws_security_group" "allow_web" {
   name        = "allow_web_traffic"
   description = "Allow web inbound traffic"
