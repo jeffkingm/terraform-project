@@ -116,8 +116,8 @@ resource "aws_network_interface" "web-server-nic" {
 }
 
 output "server_publc_ip" {
-  value = aws_instance.web-server-instance.public_ip
-  
+  value = aws_instance.web-server-instance.public_ip 
+
 }
 
 # 9. Create Ubuntu server and install/enable apache2
