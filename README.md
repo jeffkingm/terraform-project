@@ -13,7 +13,7 @@ An EC2 instance - ubuntu server
 
 6. Associate subnet with Route Table
 
-7. Create security Group to allow port 22,80,443
+7. Create security Group to allow port 22, 80, 443
 
 8. Create a network interface with an ip in the subnet
 
