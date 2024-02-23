@@ -1,5 +1,9 @@
 provider "aws" {
   region     = "us-east-1"
+
+  # These should be stored securely in terraform or AWS
+  # These values should never be exposed and should be
+  # referenced secretly from their place of storage 
   access_key = "********"
   secret_key = "**********************"
 }
