@@ -1,4 +1,4 @@
-# Terraform project
+# Terraform project(main.tf)
 An EC2 instance - ubuntu server
 
 1. Create VPC
