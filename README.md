@@ -15,6 +15,6 @@ An EC2 instance - ubuntu server
 
 7. Create security Group to allow port 22,80,443
 
-8. create a network interface with an ip in the subnet
+8. Create a network interface with an ip in the subnet
 
 9. Create Ubuntu server and install/enable apache2
