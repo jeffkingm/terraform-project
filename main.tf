@@ -4,8 +4,8 @@ provider "aws" {
   # These should be stored securely in terraform or AWS
   # These values should never be exposed and should be
   # referenced secretly from their place of storage 
-  access_key = "********"
-  secret_key = "**********************"
+  access_key = "******"
+  secret_key = "*********************"
 }
 
 # 1. Create VPC 
@@ -22,6 +22,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.prod-vpc.id
 }
 
+
 # 3. Assign an elastic IP to the network interface
 resource "aws_eip" "one" {
   # vpc                     = true (***This has now been Deprecated. Use "domain = true" instead)
@@ -35,7 +36,16 @@ resource "aws_eip" "one" {
     ]  
 }
 
-# 4. Create Custom Route Table
+# 4. create a network interface with an ip in the subnet
+resource "aws_network_interface" "web-server-nic" {
+  subnet_id       = aws_subnet.subnet-1.id
+  private_ips     = ["10.0.1.50"]
+  security_groups = [aws_security_group.allow_web.id]
+
+}
+
+
+# 5. Create Custom Route Table
 resource "aws_route_table" "prod-route-table" {
   vpc_id = aws_vpc.prod-vpc.id
 
@@ -54,7 +64,7 @@ resource "aws_route_table" "prod-route-table" {
   }
 }
 
-# 5. Create a Subnet
+# 6. Create a Subnet
 resource "aws_subnet" "subnet-1" {
   vpc_id            = aws_vpc.prod-vpc.id
   cidr_block        =  "10.0.1.0/24"
@@ -66,13 +76,13 @@ resource "aws_subnet" "subnet-1" {
 
 }
 
-# 6. Associate subnet with Route Table 
+# 7. Associate subnet with Route Table 
 resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.subnet-1.id
   route_table_id = aws_route_table.prod-route-table.id
 }
 
-# 7. Create security Group to allow port 22, 80, 443
+# 8. Create security Group to allow port 22, 80, 443
 resource "aws_security_group" "allow_web" {
   name        = "allow_web_traffic"
   description = "Allow web inbound traffic"
@@ -111,14 +121,6 @@ resource "aws_security_group" "allow_web" {
   }
 }
 
-# 8. create a network interface with an ip in the subnet
-resource "aws_network_interface" "web-server-nic" {
-  subnet_id       = aws_subnet.subnet-1.id
-  private_ips     = ["10.0.1.50"]
-  security_groups = [aws_security_group.allow_web.id]
-
-}
-
 output "server_publc_ip" {
   value = aws_instance.web-server-instance.public_ip 
 
@@ -141,7 +143,7 @@ resource "aws_instance" "web-server-instance" {
                 sudo apt update -y
                 sudo apt install apache2 -y
                 sudo systemctl start apache2
-                sudo bash -c 'echo Hi David Ephy! Here is Your very first web server Tech Mahindra > /var/www/html/index.html'
+                sudo bash -c 'echo Wellcome to 2022....> /var/www/html/index.html'
                 EOF
         tags =  {
             Name = "web-server"
